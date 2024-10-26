@@ -12,7 +12,7 @@ RUN a2enmod rewrite ssl socache_shmcb
 COPY --from=composer/composer:2.7.7-bin /composer /usr/bin/composer
 
 # Set the working directory inside the container
-WORKDIR /var/www/html
+WORKDIR /var/www/html/public
 
 # Set the Apache DocumentRoot to Symfony's public directory
 RUN sed -i 's!/var/www/html!/var/www/html/public!g' /etc/apache2/sites-available/000-default.conf

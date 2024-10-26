@@ -26,5 +26,5 @@ RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
 # Expose Apache port
 EXPOSE 8080
 
-RUN composer install --no-dev --no-scripts --optimize-autoloader --prefer-dist
+RUN composer install
 

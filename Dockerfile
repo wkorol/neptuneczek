@@ -1,6 +1,8 @@
 # Use Apache with PHP 8.3
 FROM php:8.3-apache-bookworm
 
+ENV COMPOSER_ALLOW_SUPERUSER=1
+
 # Install necessary packages and PHP extensions
 RUN apt-get -y update && apt-get -y upgrade && apt-get -y install wget git bash libpq-dev libzip-dev unzip libxml2-dev \
     && docker-php-ext-install pdo pdo_pgsql opcache zip soap intl
@@ -26,5 +28,5 @@ RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
 # Expose Apache port
 EXPOSE 8080
 
-RUN COMPOSER_ALLOW_SUPERUSER=1 composer install --no-dev
+RUN composer install
 

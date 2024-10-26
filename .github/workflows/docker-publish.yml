@@ -24,9 +24,9 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t ghcr.io/wkorol/symfony-app:latest .
+          docker build --build-arg COMPOSER_INSTALL=true -t ghcr.io/wkorol/symfony-app:latest .
           docker tag ghcr.io/wkorol/symfony-app:latest registry.digitalocean.com/symfony-app/symfony-app:latest
-      
+
       # - name: Push to GitHub Container Registry
       #   run: docker push ghcr.io/wkorol/symfony-app:latest
 
@@ -39,5 +39,3 @@ jobs:
           -H "Authorization: Bearer ${{ secrets.DO_API_TOKEN }}" \
           -d '{"spec": {"services": [{"name": "web", "image": {"registry_type": "DOCR", "registry": "registry.digitalocean.com", "repository": "symfony-app/symfony-app", "tag": "latest"}}]}}' \
           https://api.digitalocean.com/v2/apps/${{ secrets.DO_APP_ID }}/deployments
-
-

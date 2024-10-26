@@ -26,5 +26,5 @@ RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
 # Expose Apache port
 EXPOSE 8080
 
-RUN composer install
+RUN COMPOSER_ALLOW_SUPERUSER=1 composer install --no-dev
 

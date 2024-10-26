@@ -23,7 +23,8 @@ RUN sed -i 's!/var/www/html!/var/www/html/public!g' /etc/apache2/sites-available
 # Set a ServerName to suppress the warning
 RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
-RUN composer install --no-interaction --optimize-autoloader --no-dev
+COPY composer.* ./
+RUN composer install
 
 # Expose Apache port
 EXPOSE 8080

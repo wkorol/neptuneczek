@@ -27,8 +27,8 @@ jobs:
           docker build -t ghcr.io/wkorol/symfony-app:latest .
           docker tag ghcr.io/wkorol/symfony-app:latest registry.digitalocean.com/symfony-app/symfony-app:latest
       
-      - name: Push to GitHub Container Registry
-        run: docker push ghcr.io/wkorol/symfony-app:latest
+      # - name: Push to GitHub Container Registry
+      #   run: docker push ghcr.io/wkorol/symfony-app:latest
 
       - name: Push to DigitalOcean Container Registry
         run: docker push registry.digitalocean.com/symfony-app/symfony-app:latest

@@ -1,25 +1,43 @@
-name: Publish Docker Image to GHCR
+name: Build and Deploy to DigitalOcean
 
 on:
   push:
     branches:
-      - main
+      - main  # Deploys on push to the main branch
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
+        uses: docker/setup-buildx-action@v3
 
       - name: Log in to GitHub Container Registry
         run: echo "${{ secrets.GHCR_PAT }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
-      - name: Build and push Docker image
+      - name: Log in to DigitalOcean Container Registry
+        run: echo "${{ secrets.DO_API_TOKEN }}" | docker login registry.digitalocean.com -u ${{ secrets.DO_API_TOKEN }} --password-stdin
+
+      - name: Build Docker image
         run: |
-          docker build -t ghcr.io/${{ github.repository_owner }}/symfony-app:latest .
-          docker push ghcr.io/${{ github.repository_owner }}/symfony-app:latest
+          docker build -t ghcr.io/wkorol/symfony-app:latest .
+          docker tag ghcr.io/wkorol/symfony-app:latest registry.digitalocean.com/symfony-app/symfony-app:latest
+      
+      - name: Push to GitHub Container Registry
+        run: docker push ghcr.io/wkorol/symfony-app:latest
+
+      - name: Push to DigitalOcean Container Registry
+        run: docker push registry.digitalocean.com/symfony-app/symfony-app:latest
+
+      - name: Deploy to DigitalOcean App Platform
+        run: |
+          curl -X POST -H "Content-Type: application/json" \
+          -H "Authorization: Bearer ${{ secrets.DO_API_TOKEN }}" \
+          -d '{"spec": {"services": [{"name": "web", "image": {"registry_type": "DOCR", "registry": "registry.digitalocean.com", "repository": "symfony-app/symfony-app", "tag": "latest"}}]}}' \
+          https://api.digitalocean.com/v2/apps/${{ secrets.DO_APP_ID }}/deployments
+
 

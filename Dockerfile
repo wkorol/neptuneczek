@@ -24,7 +24,7 @@ RUN sed -i 's!/var/www/html!/var/www/html/public!g' /etc/apache2/sites-available
 RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
 # Expose Apache port
-EXPOSE 8080
+EXPOSE 80
 
 # Start Apache in the foreground
 CMD ["apache2-foreground"]

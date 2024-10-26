@@ -26,5 +26,8 @@ RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
 # Expose Apache port
 EXPOSE 8080
 
+# Ensure Apache listens on port 8080
+RUN sed -i 's/Listen 80/Listen 8080/' /etc/apache2/ports.conf
+
 # Start Apache in the foreground
 CMD ["apache2-foreground"]

@@ -23,10 +23,6 @@ RUN sed -i 's!/var/www/html!/var/www/html/public!g' /etc/apache2/sites-available
 # Set a ServerName to suppress the warning
 RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
-# Add entrypoint script to run composer install
-COPY entrypoint.sh /usr/local/bin/entrypoint.sh
-RUN chmod +x /usr/local/bin/entrypoint.sh
-
 # Expose Apache port
 EXPOSE 8080
 

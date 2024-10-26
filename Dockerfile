@@ -30,5 +30,4 @@ RUN chmod +x /usr/local/bin/entrypoint.sh
 # Expose Apache port
 EXPOSE 8080
 
-# Use entrypoint script to start Apache
-ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
+RUN composer install --no-dev

@@ -24,5 +24,5 @@ COPY 000-default.conf /etc/apache2/sites-available/000-default.conf
 # Expose Apache port
 EXPOSE 8080
 
-RUN composer install
+RUN composer install --optimize-autoloader --no-dev
 

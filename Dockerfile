@@ -25,6 +25,8 @@ RUN sed -i 's!/var/www/html!/var/www/html/public!g' /etc/apache2/sites-available
 # Set a ServerName to suppress the warning
 RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
+COPY 000-default.conf /etc/apache2/sites-available/000-default.conf
+
 # Expose Apache port
 EXPOSE 8080
 

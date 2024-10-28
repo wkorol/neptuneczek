@@ -69,9 +69,8 @@ jobs:
       - name: Push to GitHub Container Registry
         run: docker push ghcr.io/wkorol/symfony-app:latest
 
-      - name: Deploy to DigitalOcean App Platform
+      - name: Trigger DigitalOcean App Redeployment
         run: |
           curl -X POST -H "Content-Type: application/json" \
           -H "Authorization: Bearer ${{ secrets.DO_API_TOKEN }}" \
-          -d '{"services": [{"name": "web", "image": {"registry_type": "DOCKER_HUB", "registry": "ghcr.io", "repository": "wkorol/symfony-app", "tag": "latest", "credentials": {"username": "'${{ github.actor }}'", "password": "'${{ secrets.GHCR_PAT }}'"}}}]}' \
           https://api.digitalocean.com/v2/apps/${{ secrets.DO_APP_ID }}/deployments

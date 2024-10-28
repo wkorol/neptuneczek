@@ -25,7 +25,7 @@ COPY . /var/www/html
 #    a2enconf servername
 
 # Expose Apache port
-EXPOSE 9000
+EXPOSE 8080
 
 RUN composer install --optimize-autoloader --no-dev
 

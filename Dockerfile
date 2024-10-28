@@ -22,7 +22,9 @@ COPY . /var/www/html
 COPY 000-default.conf /etc/apache2/sites-available/000-default.conf
 
 # Expose Apache port
-EXPOSE 8080
+EXPOSE 80
 
 RUN composer install --optimize-autoloader --no-dev
 
+# Start Apache in the foreground
+CMD ["apache2-foreground"]

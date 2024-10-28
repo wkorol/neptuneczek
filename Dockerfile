@@ -8,7 +8,7 @@ RUN apt-get -y update && apt-get -y upgrade && apt-get -y install wget git bash 
     && docker-php-ext-install pdo pdo_pgsql opcache zip soap intl
 
 # Enable Apache modules
-RUN a2enmod rewrite ssl socache_shmcb
+#RUN a2enmod rewrite ssl socache_shmcb
 
 # Install Composer
 COPY --from=composer/composer:2.7.7-bin /composer /usr/bin/composer

@@ -26,7 +26,5 @@ RUN echo "ServerName _" >> /etc/apache2/conf-available/servername.conf && \
 
 RUN composer install --optimize-autoloader --no-dev
 
-EXPOSE 8080
-
 # Start Apache in the foreground
 CMD ["apache2-foreground"]

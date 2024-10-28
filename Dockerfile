@@ -1,5 +1,5 @@
 # Use Apache with PHP 8.3
-FROM php:8.3-apache-bookworm
+FROM php:8.3-fpm
 
 ENV COMPOSER_ALLOW_SUPERUSER=1
 
@@ -19,15 +19,15 @@ WORKDIR /var/www/html
 # Copy your application files into the container
 COPY . /var/www/html
 
-COPY 000-default.conf /etc/apache2/sites-available/000-default.conf
-
-RUN echo "ServerName localhost" >> /etc/apache2/conf-available/servername.conf && \
-    a2enconf servername
+#COPY 000-default.conf /etc/apache2/sites-available/000-default.conf
+#
+#RUN echo "ServerName localhost" >> /etc/apache2/conf-available/servername.conf && \
+#    a2enconf servername
 
 # Expose Apache port
-EXPOSE 80
+EXPOSE 9000
 
 RUN composer install --optimize-autoloader --no-dev
 
 # Start Apache in the foreground
-CMD ["apache2-foreground"]
+CMD ["php-fpm"]

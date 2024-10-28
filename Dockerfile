@@ -25,7 +25,7 @@ RUN echo "ServerName localhost" >> /etc/apache2/conf-available/servername.conf &
     a2enconf servername
 
 # Expose Apache port
-EXPOSE 80
+EXPOSE 8080
 
 RUN composer install --optimize-autoloader --no-dev
 

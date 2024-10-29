@@ -18,7 +18,7 @@ services:
 
   db:
     image: postgres:16
-    container_name: symfony_db
+    container_name: database
     environment:
       POSTGRES_DB: symfony
       POSTGRES_USER: symfony_user

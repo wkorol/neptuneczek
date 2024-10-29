@@ -48,5 +48,5 @@ phpunit: # Run phpunit tests
 # Deploy to DigitalOcean
 deploy: # Trigger redeployment on DigitalOcean
 	curl -X POST -H "Content-Type: application/json" \
-	-H "Authorization: Bearer $$(DO_API_TOKEN)" \
-	https://api.digitalocean.com/v2/apps/$$(DO_APP_ID)/deployments
+	-H "Authorization: Bearer $(DO_API_TOKEN)" \
+	https://api.digitalocean.com/v2/apps/$(DO_APP_ID)/deployments

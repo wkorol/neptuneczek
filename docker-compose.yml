@@ -14,9 +14,10 @@ services:
       - symfony-network
     depends_on:
       - database
+    environment:
+      DATABASE_URL: "postgresql://symfony_user:symfony_password@database:5432/symfony"
   database:
     image: postgres:16
-    container_name: symfony_db
     environment:
       POSTGRES_DB: symfony
       POSTGRES_USER: symfony_user
@@ -30,6 +31,7 @@ services:
 
 networks:
   symfony-network:
+    driver: bridge
 
 volumes:
   db_data:

@@ -11,13 +11,9 @@ DOCKER_IMAGE ?= ghcr.io/wkorol/symfony-app:latest
 start: build up composer_install permissions # Bootstrap and start the application (dev)
 
 
-#create_volumes: # Create docker volumes
-#	docker volume create --name=symfony-db || true
-
 # Build Docker image
 build: # Build Docker image and push to registry
-	${DOCKER_COMPOSE} build
-	docker tag ${DOCKER_IMAGE} ${DOCKER_IMAGE}
+	docker build -t ${DOCKER_IMAGE} .
 	docker push ${DOCKER_IMAGE}
 
 # Start Docker Compose in detached mode

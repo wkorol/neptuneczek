@@ -28,8 +28,6 @@ down: # Stop docker compose
 composer_install: # Install composer dependencies
 	${EXEC_COMMAND} ${COMPOSER_EXEC} install --optimize-autoloader --no-dev
 
-
-
 # Run PHPStan for static analysis
 lint: # Run PHPStan linter for static code analysis
 	${EXEC_COMMAND} vendor/bin/phpstan analyse --memory-limit=-1

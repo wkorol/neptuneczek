@@ -13,12 +13,10 @@ services:
     networks:
       - symfony-network
     depends_on:
-      - db
-
-
-  db:
+      - database
+  database:
     image: postgres:16
-    container_name: database
+    container_name: symfony_db
     environment:
       POSTGRES_DB: symfony
       POSTGRES_USER: symfony_user

@@ -16,19 +16,18 @@ services:
       - db
 
   db:
-    image: mysql:8.0
+    image: postgres:16
     container_name: symfony_db
     environment:
-      MYSQL_ROOT_PASSWORD: root_password
-      MYSQL_DATABASE: symfony
-      MYSQL_USER: symfony_user
-      MYSQL_PASSWORD: symfony_password
+      POSTGRES_DB: symfony
+      POSTGRES_USER: symfony_user
+      POSTGRES_PASSWORD: symfony_password
     ports:
-      - "3306:3306"
+      - "5432:5432"
     networks:
       - symfony-network
     volumes:
-      - db_data:/var/lib/mysql
+      - db_data:/var/lib/postgresql/data
 
 networks:
   symfony-network:

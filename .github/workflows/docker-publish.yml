@@ -102,7 +102,7 @@ jobs:
         run: sudo apt-get update && sudo apt-get install -y make
 
       - name: Build Docker Image and Push to Registry
-        run: make build
+        run: make start
 
       - name: Deploy to DigitalOcean
         env:

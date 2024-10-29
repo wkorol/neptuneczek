@@ -14,7 +14,6 @@ services:
       - symfony-network
     depends_on:
       - db
-    entrypoint: [ "./wait-for-db.sh", "&&", "composer", "install", "--optimize-autoloader", "--no-dev", "&&", "apache2-foreground" ]
 
 
   db:

@@ -41,6 +41,40 @@
 #           https://api.digitalocean.com/v2/apps/${{ secrets.DO_APP_ID }}/deployments
 
 
+#name: Build and Deploy to DigitalOcean
+#
+#on:
+#  push:
+#    branches:
+#      - main  # Deploys on push to the main branch
+#
+#jobs:
+#  build-and-deploy:
+#    runs-on: ubuntu-latest
+#
+#    steps:
+#      - name: Checkout code
+#        uses: actions/checkout@v3
+#
+#      - name: Set up Docker Buildx
+#        uses: docker/setup-buildx-action@v3
+#
+#      - name: Log in to GitHub Container Registry
+#        run: echo "${{ secrets.GHCR_PAT }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+#
+#      - name: Build Docker image
+#        run: |
+#          docker build -t ghcr.io/wkorol/symfony-app:latest .
+#
+#      - name: Push to GitHub Container Registry
+#        run: docker push ghcr.io/wkorol/symfony-app:latest
+#
+#      - name: Trigger DigitalOcean App Redeployment
+#        run: |
+#          curl -X POST -H "Content-Type: application/json" \
+#          -H "Authorization: Bearer ${{ secrets.DO_API_TOKEN }}" \
+#          https://api.digitalocean.com/v2/apps/${{ secrets.DO_APP_ID }}/deployments
+
 name: Build and Deploy to DigitalOcean
 
 on:
@@ -60,17 +94,18 @@ jobs:
         uses: docker/setup-buildx-action@v3
 
       - name: Log in to GitHub Container Registry
-        run: echo "${{ secrets.GHCR_PAT }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+        env:
+          GHCR_PAT: ${{ secrets.GHCR_PAT }}
+        run: echo "${GHCR_PAT}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
-      - name: Build Docker image
-        run: |
-          docker build -t ghcr.io/wkorol/symfony-app:latest .
+      - name: Install Make
+        run: sudo apt-get update && sudo apt-get install -y make
 
-      - name: Push to GitHub Container Registry
-        run: docker push ghcr.io/wkorol/symfony-app:latest
+      - name: Build Docker Image and Push to Registry
+        run: make build
 
-      - name: Trigger DigitalOcean App Redeployment
-        run: |
-          curl -X POST -H "Content-Type: application/json" \
-          -H "Authorization: Bearer ${{ secrets.DO_API_TOKEN }}" \
-          https://api.digitalocean.com/v2/apps/${{ secrets.DO_APP_ID }}/deployments
+      - name: Deploy to DigitalOcean
+        env:
+          DO_API_TOKEN: ${{ secrets.DO_API_TOKEN }}
+          DO_APP_ID: ${{ secrets.DO_APP_ID }}
+        run: make deploy

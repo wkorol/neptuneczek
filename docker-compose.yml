@@ -9,11 +9,13 @@ services:
     volumes:
       - ./:/var/www/html
     ports:
-      - "8080:80"  # Change this to map localhost:8080 to Apache's port 80 inside the container
+      - "8080:80"
     networks:
       - symfony-network
     depends_on:
       - db
+    entrypoint: [ "./wait-for-db.sh", "&&", "composer", "install", "--optimize-autoloader", "--no-dev", "&&", "apache2-foreground" ]
+
 
   db:
     image: postgres:16

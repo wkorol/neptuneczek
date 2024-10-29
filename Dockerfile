@@ -24,7 +24,7 @@ COPY 000-default.conf /etc/apache2/sites-available/000-default.conf
 RUN echo "ServerName _" >> /etc/apache2/conf-available/servername.conf && \
     a2enconf servername
 
-RUN composer install --no-interaction --optimize-autoloader --no-dev
+RUN composer install --no-interaction --optimize-autoloader --no-dev --no-scripts
 
 RUN mkdir -p var/cache var/log && \
     chown -R www-data:www-data var

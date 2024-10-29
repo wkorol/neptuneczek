@@ -8,7 +8,7 @@ DOCKER_IMAGE ?= ghcr.io/wkorol/symfony-app:latest
 
 
 # Start the application in development mode
-start: build up composer_install # Bootstrap and start the application (dev)
+start: build up composer_install permissions # Bootstrap and start the application (dev)
 
 
 # Build Docker image
@@ -27,6 +27,11 @@ down: # Stop docker compose
 # Install Composer dependencies inside the container
 composer_install: # Install composer dependencies
 	${EXEC_COMMAND} ${COMPOSER_EXEC} install --optimize-autoloader --no-dev
+
+# Set permissions for storage folder
+permissions: # Set permissions for Symfony's storage folder
+	${EXEC_COMMAND} chmod -R a+s var/
+
 
 # Run PHPStan for static analysis
 lint: # Run PHPStan linter for static code analysis

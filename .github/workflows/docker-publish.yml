@@ -95,11 +95,6 @@ jobs:
           POSTGRES_PASSWORD: symfony_password
         ports:
           - 5432:5432
-        options: >-
-          --health-cmd "pg_isready -U symfony_user" 
-          --health-interval 10s 
-          --health-timeout 5s 
-          --health-retries 5
 
     env:
       DATABASE_URL: "postgresql://symfony_user:symfony_password@localhost:5432/symfony"

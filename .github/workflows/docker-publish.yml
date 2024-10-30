@@ -86,19 +86,6 @@ jobs:
   build-test-and-deploy:
     runs-on: ubuntu-latest
 
-    services:
-      postgres:
-        image: postgres:13
-        env:
-          POSTGRES_DB: symfony
-          POSTGRES_USER: symfony_user
-          POSTGRES_PASSWORD: symfony_password
-        ports:
-          - 5432:5432
-
-    env:
-      DATABASE_URL: "postgresql://symfony_user:symfony_password@localhost:5432/symfony"
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v3

@@ -4,8 +4,8 @@ FROM php:8.3-apache-bookworm
 ENV COMPOSER_ALLOW_SUPERUSER=1
 
 # Install necessary packages and PHP extensions
-RUN apt-get -y update && apt-get -y upgrade && apt-get -y install make wget git bash libpq-dev libzip-dev unzip libxml2-dev \
-    && docker-php-ext-install pdo pdo_pgsql opcache zip soap intl
+RUN apt-get -y update && apt-get -y upgrade && apt-get -y install  wget sqlite3 libsqlite3-dev git bash libpq-dev libzip-dev unzip libxml2-dev \
+    && docker-php-ext-install pdo pdo_sqlite opcache zip soap intl
 
 # Enable Apache modules
 RUN a2enmod rewrite ssl socache_shmcb

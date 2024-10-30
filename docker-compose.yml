@@ -10,28 +10,5 @@ services:
       - ./:/var/www/html
     ports:
       - "8080:80"
-    networks:
-      - symfony-network
-    depends_on:
-      - database
     environment:
-      DATABASE_URL: "postgresql://symfony_user:symfony_password@database:5432/symfony"
-  database:
-    image: postgres:16
-    environment:
-      POSTGRES_DB: symfony
-      POSTGRES_USER: symfony_user
-      POSTGRES_PASSWORD: symfony_password
-    ports:
-      - "5432:5432"
-    networks:
-      - symfony-network
-    volumes:
-      - db_data:/var/lib/postgresql/data
-
-networks:
-  symfony-network:
-    driver: bridge
-
-volumes:
-  db_data:
+      DATABASE_URL: "sqlite:///%kernel.project_dir%/var/data.db"

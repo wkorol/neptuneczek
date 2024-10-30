@@ -19,7 +19,7 @@
 # Logs (Symfony4)
 /var/log/*
 !var/log/.gitkeep
-
+/var/data.db
 # Parameters
 /app/config/parameters.yml
 /app/config/parameters.ini
